@@ -2,7 +2,9 @@
 {
     using System;
     using Microsoft.TeamFoundation.Client;
+#if TFS2017
     using Microsoft.VisualStudio.Services.Common;
+#endif
     using IdentityDescriptor = Microsoft.TeamFoundation.Framework.Client.IdentityDescriptor;
 
 #pragma warning disable S1450 // Private fields only used as local variables in methods should become local variables

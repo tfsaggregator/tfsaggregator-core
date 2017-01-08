@@ -155,6 +155,7 @@
     <Compile Include="Configuration\Snippet.cs" />
     <Compile Include="Configuration\ScopeMatchResult.cs" />
     <Compile Include="Configuration\TemplateScope.cs" />
+    <Compile Include="Configuration\ChangeTypeScope.cs" />
     <Compile Include="Configuration\WorkItemTypeScope.cs" />
     <Compile Include="Extensions\BaseFieldValueValidator.cs" />
     <Compile Include="Extensions\DoubleFixFieldDecorator.cs" />
@@ -166,6 +167,7 @@
     <Compile Include="Extensions\NullAssignmentToRequiredFieldValueValidator.cs" />
     <Compile Include="Extensions\ValueAssignmentToHistoryFieldValidator.cs" />
     <Compile Include="Extensions\ValueAssignmentToReadonlyFieldValueValidator.cs" />
+    <Compile Include="Facade\AuthenticationToken.cs" />
     <Compile Include="Facade\ProcessTemplateVersionWrapper.cs" />
     <Compile Include="Facade\RevisionWrapper.cs" />
     <Compile Include="GlobalSuppressions.cs" />
