@@ -5,8 +5,8 @@ using System.Linq;
 using System.Runtime.Caching;
 
 using Aggregator.Core.Configuration;
-using Aggregator.Core.Facade;
 using Aggregator.Core.Extensions;
+using Aggregator.Core.Facade;
 using Aggregator.Core.Interfaces;
 using Aggregator.Core.Monitoring;
 

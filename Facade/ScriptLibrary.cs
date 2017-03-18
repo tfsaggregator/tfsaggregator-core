@@ -1,4 +1,6 @@
-﻿using Aggregator.Core.Configuration;
+﻿using System;
+using System.Net.Mail;
+using Aggregator.Core.Configuration;
 using Aggregator.Core.Context;
 using Aggregator.Core.Interfaces;
 using Aggregator.Core.Monitoring;
@@ -6,8 +8,6 @@ using Microsoft.TeamFoundation.Client;
 using Microsoft.TeamFoundation.Framework.Client;
 using Microsoft.TeamFoundation.Framework.Common;
 using Microsoft.TeamFoundation.Framework.Server;
-using System;
-using System.Net.Mail;
 
 namespace Aggregator.Core.Facade
 {
@@ -28,11 +28,13 @@ namespace Aggregator.Core.Facade
 
         private class Mailer
         {
+#pragma warning disable SA1306 // Field names must begin with lower-case letter
             private readonly bool Enabled;
             private readonly string SmtpServer;
             private readonly int SmtpPort;
             private readonly bool EnableSsl;
             private readonly MailAddress FromAddress;
+#pragma warning restore SA1306 // Field names must begin with lower-case letter
 
             internal Mailer(IVssRequestContext requestContext)
             {

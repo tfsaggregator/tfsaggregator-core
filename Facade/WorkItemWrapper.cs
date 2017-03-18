@@ -270,10 +270,10 @@ namespace Aggregator.Core.Facade
             this.AddHyperlink(destination, string.Empty);
         }
 
-        public void AddHyperlink(string destination, string comment = "")
+        public void AddHyperlink(string destination, string comment)
         {
             var link = new Hyperlink(destination);
-            link.Comment = comment;
+            link.Comment = comment ?? string.Empty;
             if (!this.workItem.Links.Contains(link))
             {
                 this.Logger.AddingHyperlink(this.Id, destination, comment);
