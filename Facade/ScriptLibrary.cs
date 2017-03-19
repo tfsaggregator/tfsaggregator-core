@@ -9,10 +9,17 @@ using Microsoft.TeamFoundation.Framework.Client;
 using Microsoft.TeamFoundation.Framework.Common;
 using Microsoft.TeamFoundation.Framework.Server;
 
+#if TFS2015u1
+using IVssRequestContext = Microsoft.TeamFoundation.Framework.Server.IVssRequestContext;
+#else
+using IVssRequestContext = Microsoft.TeamFoundation.Framework.Server.TeamFoundationRequestContext;
+#endif
+
 namespace Aggregator.Core.Facade
 {
     public class ScriptLibrary : IScriptLibrary
     {
+
         private readonly ILogEvents logger;
         private readonly IRequestContext requestContext;
         private readonly ConnectionInfo connectionInfo;
@@ -28,6 +35,12 @@ namespace Aggregator.Core.Facade
 
         private class Mailer
         {
+#if TFS2015u1
+            readonly string NotificationRootPath = FrameworkServerConstants.NotificationRootPath;
+#else
+            // HACK is it completely useless?
+            readonly string NotificationRootPath = "/Service/Integration/Settings";
+#endif
 #pragma warning disable SA1306 // Field names must begin with lower-case letter
             private readonly bool Enabled;
             private readonly string SmtpServer;
@@ -42,7 +55,7 @@ namespace Aggregator.Core.Facade
                 try
                 {
                     TeamFoundationRegistryService service = requestContext.GetService<TeamFoundationRegistryService>();
-                    Microsoft.TeamFoundation.Framework.Server.RegistryEntryCollection registryEntryCollection = service.ReadEntriesFallThru(requestContext, FrameworkServerConstants.NotificationRootPath + "/*");
+                    Microsoft.TeamFoundation.Framework.Server.RegistryEntryCollection registryEntryCollection = service.ReadEntriesFallThru(requestContext, this.NotificationRootPath + "/*");
                     if (registryEntryCollection["EmailEnabled"].GetValue<bool>(true))
                     {
                         this.SmtpServer = registryEntryCollection["SmtpServer"].GetValue(string.Empty);
