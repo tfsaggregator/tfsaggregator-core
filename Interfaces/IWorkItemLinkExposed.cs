@@ -4,6 +4,8 @@
     {
         string LinkTypeEndImmutableName { get; }
 
+        int TargetId { get; }
+
         IWorkItemExposed Target { get; }
     }
 }

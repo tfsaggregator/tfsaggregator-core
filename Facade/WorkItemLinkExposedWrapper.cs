@@ -18,6 +18,8 @@ namespace Aggregator.Core.Facade
 
         public string LinkTypeEndImmutableName => this.item.LinkTypeEnd.ImmutableName;
 
+        public int TargetId => this.item.TargetId;
+
         public IWorkItemExposed Target => this.context.WorkItemRepository.GetWorkItem(this.item.TargetId);
     }
 }
