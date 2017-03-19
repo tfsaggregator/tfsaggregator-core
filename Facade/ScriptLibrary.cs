@@ -35,7 +35,7 @@ namespace Aggregator.Core.Facade
 
         private class Mailer
         {
-#if TFS2015u1
+#if TFS2017
             readonly string NotificationRootPath = FrameworkServerConstants.NotificationRootPath;
 #else
             // HACK is it completely useless?
