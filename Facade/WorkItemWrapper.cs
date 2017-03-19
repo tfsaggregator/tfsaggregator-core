@@ -138,11 +138,19 @@ namespace Aggregator.Core.Facade
             }
         }
 
-        public override IWorkItemLinkCollection WorkItemLinks
+        public override IWorkItemLinkCollection WorkItemLinksImpl
         {
             get
             {
                 return new WorkItemLinkCollectionWrapper(this.workItem.WorkItemLinks, this.context);
+            }
+        }
+
+        public IWorkItemLinkExposedCollection WorkItemLinks
+        {
+            get
+            {
+                return new WorkItemLinkExposedCollectionWrapper(this.workItem.WorkItemLinks, this.context);
             }
         }
 
@@ -282,6 +290,27 @@ namespace Aggregator.Core.Facade
             else
             {
                 this.Logger.HyperlinkAlreadyExists(this.Id, destination, comment);
+            }
+        }
+
+        public void RemoveWorkItemLink(IWorkItemLinkExposed link)
+        {
+            bool deleted = false;
+            foreach (WorkItemLink item in this.workItem.WorkItemLinks)
+            {
+                if (item.SourceId == this.Id
+                    && item.TargetId == link.Target.Id
+                    && item.LinkTypeEnd.ImmutableName == link.LinkTypeEndImmutableName)
+                {
+                    this.Logger.RemovingWorkItemLink(item);
+                    this.workItem.WorkItemLinks.Remove(item);
+                    deleted = true;
+                    break;
+                }
+            }
+            if (!deleted)
+            {
+                this.Logger.WorkItemLinkNotFound(link);
             }
         }
     }

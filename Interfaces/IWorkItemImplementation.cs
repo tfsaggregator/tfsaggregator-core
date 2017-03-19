@@ -2,6 +2,6 @@
 {
     public interface IWorkItemImplementation
     {
-        IWorkItemLinkCollection WorkItemLinks { get; }
+        IWorkItemLinkCollection WorkItemLinksImpl { get; }
     }
 }

@@ -460,5 +460,19 @@ namespace Aggregator.Core.Monitoring
         {
             this.logger.Log(LogLevel.Verbose, $"Reading GlobalList {globalListName} from {collectionName}");
         }
+
+        public void RemovingWorkItemLink(WorkItemLink item)
+        {
+            this.logger.Log(
+                LogLevel.Information,
+                $"Removing work item link '{item.LinkTypeEnd.Name}' ({item.LinkTypeEnd.ImmutableName}) from #{item.SourceId} to #{item.TargetId}");
+        }
+
+        public void WorkItemLinkNotFound(IWorkItemLinkExposed link)
+        {
+            this.logger.Log(
+                LogLevel.Error,
+                $"Work item link {link.LinkTypeEndImmutableName} to #{link.Target.Id} ({link.Target.TypeName})");
+        }
     }
 }

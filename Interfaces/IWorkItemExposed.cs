@@ -50,7 +50,11 @@ namespace Aggregator.Core.Interfaces
         IEnumerable<IWorkItemExposed> GetRelatives(FluentQuery query);
 
         // links management
+        IWorkItemLinkExposedCollection WorkItemLinks { get; }
+
         void AddWorkItemLink(IWorkItemExposed destination, string linkTypeName);
+
+        void RemoveWorkItemLink(IWorkItemLinkExposed link);
 
         void AddHyperlink(string destination);
 

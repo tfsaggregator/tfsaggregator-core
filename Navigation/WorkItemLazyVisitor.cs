@@ -45,7 +45,7 @@ namespace Aggregator.Core.Navigation
         public IEnumerator<IWorkItemExposed> GetEnumerator()
         {
             var links = new List<Tuple<int, IWorkItemLink>>(
-                this.sourceWorkItem.WorkItemLinks
+                this.sourceWorkItem.WorkItemLinksImpl
                     .Where(link => link.LinkTypeEndImmutableName.SameAs(this.linkType))
                     .Select(link => Tuple.Create(this.levels - 1, link)));
 
@@ -64,7 +64,7 @@ namespace Aggregator.Core.Navigation
                 {
                     // add to end => depth-first
                     links.AddRange(
-                        relatedWorkItem.WorkItemLinks
+                        relatedWorkItem.WorkItemLinksImpl
                         .Where(link => link.LinkTypeEndImmutableName.SameAs(this.linkType))
                         .Select(link => Tuple.Create(current.Item1 - 1, link)));
                 }

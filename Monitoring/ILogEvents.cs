@@ -102,5 +102,9 @@ namespace Aggregator.Core.Monitoring
         void Connecting(ConnectionInfo ci);
 
         void ReadingGlobalList(string collectionName, string globalListName);
+
+        void RemovingWorkItemLink(WorkItemLink item);
+
+        void WorkItemLinkNotFound(IWorkItemLinkExposed link);
     }
 }

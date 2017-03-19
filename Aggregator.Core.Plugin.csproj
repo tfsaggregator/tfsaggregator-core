@@ -170,12 +170,16 @@
     <Compile Include="Facade\AuthenticationToken.cs" />
     <Compile Include="Facade\ProcessTemplateVersionWrapper.cs" />
     <Compile Include="Facade\RevisionWrapper.cs" />
+    <Compile Include="Facade\WorkItemLinkExposedCollectionWrapper.cs" />
+    <Compile Include="Facade\WorkItemLinkExposedWrapper.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Interfaces\IFieldExposed.cs" />
     <Compile Include="Interfaces\IProcessTemplateVersion.cs" />
     <Compile Include="Interfaces\IRevision.cs" />
     <Compile Include="Interfaces\IWorkItemExposed.cs" />
     <Compile Include="Interfaces\IWorkItemImplementation.cs" />
+    <Compile Include="Interfaces\IWorkItemLinkExposed.cs" />
+    <Compile Include="Interfaces\IWorkItemLinkExposedCollection.cs" />
     <Compile Include="Interfaces\IWorkItemRepositoryExposed.cs" />
     <Compile Include="Monitoring\ILogger.cs" />
     <Compile Include="Monitoring\IRuleLogger.cs" />

@@ -40,7 +40,7 @@ namespace Aggregator.Core
         /// Provides access to the WorkItemLinks collection of the underlying work item.
         /// </summary>
         /// <value>The WorkItemLinkCollection</value>
-        public abstract IWorkItemLinkCollection WorkItemLinks { get; }
+        public abstract IWorkItemLinkCollection WorkItemLinksImpl { get; }
 
         /// <summary>Checks whether this workitem has a relation of the specified type.</summary>
         /// <exception cref="ArgumentNullException"><paramref name="relation"/> is <see langword="null" />.</exception>
@@ -53,7 +53,7 @@ namespace Aggregator.Core
                 throw new ArgumentNullException(nameof(relation));
             }
 
-            foreach (var link in this.WorkItemLinks)
+            foreach (var link in this.WorkItemLinksImpl)
             {
                 if (string.Equals(relation, link.LinkTypeEndImmutableName, StringComparison.OrdinalIgnoreCase))
                 {
@@ -73,7 +73,7 @@ namespace Aggregator.Core
             get
             {
                 int? parentWorkItemId = (
-                    from IWorkItemLink workItemLink in this.WorkItemLinks
+                    from IWorkItemLink workItemLink in this.WorkItemLinksImpl
                     where workItemLink.LinkTypeEndImmutableName == ParentRelationship
                     select workItemLink.TargetId)
                     .Cast<int?>()
@@ -99,7 +99,7 @@ namespace Aggregator.Core
             get
             {
                 var childWorkItems =
-                    from IWorkItemLink workItemLink in this.WorkItemLinks
+                    from IWorkItemLink workItemLink in this.WorkItemLinksImpl
                     where workItemLink.LinkTypeEndImmutableName == ChildRelationship
                     select this.Store.GetWorkItem(workItemLink.TargetId);
 
