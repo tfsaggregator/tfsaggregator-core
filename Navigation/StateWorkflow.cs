@@ -32,7 +32,7 @@ namespace Aggregator.Core.Navigation
         public static void TransitionToState(IWorkItem workItem, string state, string commentPrefix, ILogEvents logger)
         {
             // Set the sourceWorkItem's state so that it is clear that it has been moved.
-            string originalState = (string)workItem.Fields["State"].Value;
+            string originalState = (string)workItem.Fields["System.State"].Value;
 
             // Try to set the state of the source work item to the "Deleted/Moved" state (whatever is defined in the file).
 
@@ -40,15 +40,15 @@ namespace Aggregator.Core.Navigation
             workItem.TryOpen();
 
             // See if we can go directly to the planned state.
-            workItem.Fields["State"].Value = state;
+            workItem.Fields["System.State"].Value = state;
 
-            if (workItem.Fields["State"].Status != FieldStatus.Valid)
+            if (workItem.Fields["System.State"].Status != FieldStatus.Valid)
             {
                 // Revert back to the original value and start searching for a way to our "MovedState"
-                workItem.Fields["State"].Value = workItem.Fields["State"].OriginalValue;
+                workItem.Fields["System.State"].Value = workItem.Fields["System.State"].OriginalValue;
 
                 // If we can't then try to go from the current state to another state.  Saving each time till we get to where we are going.
-                foreach (string curState in FindNextState(workItem.Type, (string)workItem.Fields["State"].Value, state))
+                foreach (string curState in FindNextState(workItem.Type, (string)workItem.Fields["System.State"].Value, state))
                 {
                     string comment;
                     if (curState == state)
@@ -92,7 +92,7 @@ namespace Aggregator.Core.Navigation
             try
             {
                 workItem.TryOpen();
-                workItem.Fields["State"].Value = destState;
+                workItem.Fields["System.State"].Value = destState;
                 workItem.History = comment;
 
                 logger.AttemptingToMoveWorkItemToState(workItem, orginalSourceState, destState);
@@ -111,7 +111,7 @@ namespace Aggregator.Core.Navigation
             catch (Exception)
             {
                 // Revert back to the original value.
-                workItem.Fields["State"].Value = orginalSourceState;
+                workItem.Fields["System.State"].Value = orginalSourceState;
                 return false;
             }
         }
