@@ -14,5 +14,9 @@ namespace Aggregator.Core.Interfaces
         IWorkItem MakeNewWorkItem(IWorkItem inSameProjectAs, string workItemTypeName);
 
         IEnumerable<string> GetGlobalList(string globalListName);
+
+        void AddItemToGlobalList(string globalListName, string item);
+
+        void RemoveItemFromGlobalList(string globalListName, string item);
     }
 }

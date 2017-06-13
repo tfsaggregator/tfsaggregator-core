@@ -107,24 +107,103 @@ namespace Aggregator.Core.Facade
         {
             this.logger.ReadingGlobalList(this.workItemStore.TeamProjectCollection.Name, globalListName);
 
+            if (string.IsNullOrWhiteSpace(globalListName))
+            {
+                throw new ArgumentNullException(nameof(globalListName));
+            }
+
             // get Global Lists from TFS collection
-            var sourceGL = this.workItemStore.ExportGlobalLists();
-            return ParseGlobalList(sourceGL, globalListName);
+            var globalListsDoc = this.workItemStore.ExportGlobalLists();
+            return ParseGlobalList(globalListsDoc, globalListName);
         }
 
         // HACK public to allow Unit Testing
-        public static IEnumerable<string> ParseGlobalList(XmlDocument sourceGL, string globalListName)
+        public static IEnumerable<string> ParseGlobalList(XmlDocument globalListsDoc, string globalListName)
         {
-            var ns = new XmlNamespaceManager(sourceGL.NameTable);
+            var ns = new XmlNamespaceManager(globalListsDoc.NameTable);
             ns.AddNamespace("gl", "http://schemas.microsoft.com/VisualStudio/2005/workitemtracking/globallists");
 
             string xpath = string.Format("/gl:GLOBALLISTS/GLOBALLIST[@name='{0}']/LISTITEM/@value", globalListName);
-            var nodes = sourceGL.SelectNodes(xpath, ns);
+            var nodes = globalListsDoc.SelectNodes(xpath, ns);
 
             foreach (XmlAttribute node in nodes.Cast<XmlAttribute>())
             {
                 yield return node.Value;
             }
+        }
+
+        public void AddItemToGlobalList(string globalListName, string item)
+        {
+            this.logger.AddingToGlobalList(this.workItemStore.TeamProjectCollection.Name, globalListName, item);
+
+            if (string.IsNullOrWhiteSpace(globalListName))
+            {
+                throw new ArgumentNullException(nameof(globalListName));
+            }
+            if (string.IsNullOrWhiteSpace(item))
+            {
+                throw new ArgumentNullException(nameof(item));
+            }
+
+            var globalListsDoc = this.workItemStore.ExportGlobalLists();
+
+            bool anyChange = EditGlobalList(globalListsDoc, globalListName, item, EditAction.Add);
+
+            if (anyChange)
+            {
+                this.workItemStore.ImportGlobalLists(globalListsDoc.DocumentElement);
+            }
+        }
+
+        // HACK public to allow Unit Testing
+        public enum EditAction { Add, Remove }
+
+        // HACK public to allow Unit Testing
+        public static bool EditGlobalList(XmlDocument globalListsDoc, string globalListName, string item, EditAction action)
+        {
+            // prepare
+            var ns = new XmlNamespaceManager(globalListsDoc.NameTable);
+            ns.AddNamespace("gl", "http://schemas.microsoft.com/VisualStudio/2005/workitemtracking/globallists");
+            string xpath = string.Format($"/gl:GLOBALLISTS");
+            var rootNode = globalListsDoc.SelectSingleNode(xpath, ns);
+            bool anyChange = false;
+
+            // check if GL exists
+            xpath = string.Format(
+                $"/gl:GLOBALLISTS/GLOBALLIST[@name='{globalListName}']");
+            var globalListNode = globalListsDoc.SelectSingleNode(xpath, ns);
+            if (globalListNode == null)
+            {
+                globalListNode = globalListsDoc.CreateElement("GLOBALLIST");
+                var nameAttr = globalListsDoc.CreateAttribute("name");
+                nameAttr.Value = globalListName;
+                globalListNode.Attributes.Append(nameAttr);
+                rootNode.AppendChild(globalListNode);
+                anyChange = true;
+            }
+
+            // check if item already added
+            xpath = string.Format(
+                $"/gl:GLOBALLISTS/GLOBALLIST[@name='{globalListName}']/LISTITEM[@value='{item}']");
+            var itemNode = globalListsDoc.SelectSingleNode(xpath, ns);
+            if (itemNode == null)
+            {
+                itemNode = globalListsDoc.CreateElement("LISTITEM");
+                var valueAttr = globalListsDoc.CreateAttribute("value");
+                valueAttr.Value = item;
+                itemNode.Attributes.Append(valueAttr);
+                globalListNode.AppendChild(itemNode);
+                anyChange = true;
+            }
+
+            return anyChange;
+        }
+
+        public void RemoveItemFromGlobalList(string globalListName, string item)
+        {
+            this.logger.RemovingFromGlobalList(this.workItemStore.TeamProjectCollection.Name, globalListName, item);
+
+            throw new NotImplementedException();
         }
 
         public void Dispose()

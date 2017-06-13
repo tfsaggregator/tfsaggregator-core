@@ -103,6 +103,10 @@ namespace Aggregator.Core.Monitoring
 
         void ReadingGlobalList(string collectionName, string globalListName);
 
+        void AddingToGlobalList(string name, string globalListName, string item);
+
+        void RemovingFromGlobalList(string name, string globalListName, string item);
+
         void RemovingWorkItemLink(WorkItemLink item);
 
         void WorkItemLinkNotFound(IWorkItemLinkExposed link);

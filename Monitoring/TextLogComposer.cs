@@ -461,6 +461,16 @@ namespace Aggregator.Core.Monitoring
             this.logger.Log(LogLevel.Verbose, $"Reading GlobalList {globalListName} from {collectionName}");
         }
 
+        public void AddingToGlobalList(string collectionName, string globalListName, string item)
+        {
+            this.logger.Log(LogLevel.Verbose, $"Adding '{item}' to GlobalList {globalListName} in {collectionName}");
+        }
+
+        public void RemovingFromGlobalList(string collectionName, string globalListName, string item)
+        {
+            this.logger.Log(LogLevel.Verbose, $"Removing '{item}' from GlobalList {globalListName} in {collectionName}");
+        }
+
         public void RemovingWorkItemLink(WorkItemLink item)
         {
             this.logger.Log(
