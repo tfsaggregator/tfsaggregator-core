@@ -131,5 +131,63 @@ namespace UnitTests.Core
             Assert.AreEqual(testItem, gl[1]);
         }
 
+        [TestMethod]
+        public void GlobalList_AddNonExistingList_Succeeded()
+        {
+            const string globalListName = "Aggregator - DoesNotExists";
+            const string testItem = "A new item";
+            var repository = new WorkItemRepositoryMock(DefaultGlobalLists);
+
+            repository.AddItemToGlobalList(globalListName, testItem);
+
+            var gl = repository.GetGlobalList(globalListName).ToArray();
+            Assert.IsNotNull(gl);
+            Assert.AreEqual(1, gl.Length);
+            Assert.AreEqual(testItem, gl[0]);
+        }
+
+        [TestMethod]
+        public void GlobalList_Remove_Succeeded()
+        {
+            const string globalListName = "Aggregator - UserParameters";
+            const string testItem = "myParameter=30";
+            var repository = new WorkItemRepositoryMock(DefaultGlobalLists);
+
+            repository.RemoveItemFromGlobalList(globalListName, testItem);
+
+            var gl = repository.GetGlobalList(globalListName).ToArray();
+            Assert.IsNotNull(gl);
+            Assert.AreEqual(0, gl.Length);
+        }
+
+        [TestMethod]
+        public void GlobalList_RemoveTwice_Succeeded()
+        {
+            const string globalListName = "Aggregator - UserParameters";
+            const string testItem = "myParameter=30";
+            var repository = new WorkItemRepositoryMock(DefaultGlobalLists);
+
+            repository.RemoveItemFromGlobalList(globalListName, testItem);
+            repository.RemoveItemFromGlobalList(globalListName, testItem);
+
+            var gl = repository.GetGlobalList(globalListName).ToArray();
+            Assert.IsNotNull(gl);
+            Assert.AreEqual(0, gl.Length);
+        }
+
+        [TestMethod]
+        public void GlobalList_RemoveNonExistingList_Succeeded()
+        {
+            const string globalListName = "Aggregator - DoesNotExists";
+            const string testItem = "anything";
+            var repository = new WorkItemRepositoryMock(DefaultGlobalLists);
+
+            repository.RemoveItemFromGlobalList(globalListName, testItem);
+
+            var gl = repository.GetGlobalList(globalListName).ToArray();
+            Assert.IsNotNull(gl);
+            Assert.AreEqual(0, gl.Length);
+        }
+
     }
 }

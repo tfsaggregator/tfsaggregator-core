@@ -155,6 +155,30 @@ namespace Aggregator.Core.Facade
             }
         }
 
+        public void RemoveItemFromGlobalList(string globalListName, string item)
+        {
+            this.logger.RemovingFromGlobalList(this.workItemStore.TeamProjectCollection.Name, globalListName, item);
+
+
+            if (string.IsNullOrWhiteSpace(globalListName))
+            {
+                throw new ArgumentNullException(nameof(globalListName));
+            }
+            if (string.IsNullOrWhiteSpace(item))
+            {
+                throw new ArgumentNullException(nameof(item));
+            }
+
+            var globalListsDoc = this.workItemStore.ExportGlobalLists();
+
+            bool anyChange = EditGlobalList(globalListsDoc, globalListName, item, EditAction.Remove);
+
+            if (anyChange)
+            {
+                this.workItemStore.ImportGlobalLists(globalListsDoc.DocumentElement);
+            }
+        }
+
         // HACK public to allow Unit Testing
         public enum EditAction { Add, Remove }
 
@@ -172,7 +196,7 @@ namespace Aggregator.Core.Facade
             xpath = string.Format(
                 $"/gl:GLOBALLISTS/GLOBALLIST[@name='{globalListName}']");
             var globalListNode = globalListsDoc.SelectSingleNode(xpath, ns);
-            if (globalListNode == null)
+            if (globalListNode == null && action == EditAction.Add)
             {
                 globalListNode = globalListsDoc.CreateElement("GLOBALLIST");
                 var nameAttr = globalListsDoc.CreateAttribute("name");
@@ -186,7 +210,7 @@ namespace Aggregator.Core.Facade
             xpath = string.Format(
                 $"/gl:GLOBALLISTS/GLOBALLIST[@name='{globalListName}']/LISTITEM[@value='{item}']");
             var itemNode = globalListsDoc.SelectSingleNode(xpath, ns);
-            if (itemNode == null)
+            if (itemNode == null && action == EditAction.Add)
             {
                 itemNode = globalListsDoc.CreateElement("LISTITEM");
                 var valueAttr = globalListsDoc.CreateAttribute("value");
@@ -195,15 +219,13 @@ namespace Aggregator.Core.Facade
                 globalListNode.AppendChild(itemNode);
                 anyChange = true;
             }
+            else if (itemNode != null && action == EditAction.Remove)
+            {
+                globalListNode.RemoveChild(itemNode);
+                anyChange = true;
+            }
 
             return anyChange;
-        }
-
-        public void RemoveItemFromGlobalList(string globalListName, string item)
-        {
-            this.logger.RemovingFromGlobalList(this.workItemStore.TeamProjectCollection.Name, globalListName, item);
-
-            throw new NotImplementedException();
         }
 
         public void Dispose()
