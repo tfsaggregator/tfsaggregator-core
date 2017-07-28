@@ -110,5 +110,9 @@ namespace Aggregator.Core.Monitoring
         void RemovingWorkItemLink(WorkItemLink item);
 
         void WorkItemLinkNotFound(IWorkItemLinkExposed link);
+
+        void UsingFakeGetEmailAddress(string userName, string defaultValue);
+
+        void UsingFakeSendMail();
     }
 }

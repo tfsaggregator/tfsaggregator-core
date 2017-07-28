@@ -6,6 +6,10 @@ using Microsoft.TeamFoundation.Framework.Server;
 
 namespace Aggregator.Core.Script
 {
+    /// <summary>
+    /// This is a fake used by ConsoleApp;
+    /// The real one for Plugin and WebService is <seealso cref="Aggregator.Core.Facade.ScriptLibrary"/>.
+    /// </summary>
     public class ScriptLibrary : IScriptLibrary
     {
         private readonly ILogEvents logger;
@@ -19,11 +23,14 @@ namespace Aggregator.Core.Script
 
         public string GetEmailAddress(string userName, string defaultValue)
         {
+            this.logger.UsingFakeGetEmailAddress(userName, defaultValue);
             return defaultValue;
         }
 
         public void SendMail(string to, string subject, string body)
         {
+            this.logger.UsingFakeSendMail();
+
             string from = "tfsaggregator@example.com";
 
             this.logger.LibrarySendMail(from, to, subject, body);

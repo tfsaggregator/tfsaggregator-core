@@ -484,5 +484,17 @@ namespace Aggregator.Core.Monitoring
                 LogLevel.Error,
                 $"Work item link {link.LinkTypeEndImmutableName} to #{link.Target.Id} ({link.Target.TypeName})");
         }
+
+        public void UsingFakeGetEmailAddress(string userName, string defaultValue)
+        {
+            this.logger.Log(
+                LogLevel.Information,
+                $"Using fake ScriptLibrary implementation: returning default value {defaultValue} for '{userName}'.");
+        }
+
+        public void UsingFakeSendMail()
+        {
+            this.logger.Log(LogLevel.Information, $"Using fake ScriptLibrary implementation: mail will be sent to localhost.");
+        }
     }
 }

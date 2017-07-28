@@ -15,6 +15,10 @@ using IVssRequestContext = Microsoft.TeamFoundation.Framework.Server.IVssRequest
 using IVssRequestContext = Microsoft.TeamFoundation.Framework.Server.TeamFoundationRequestContext;
 #endif
 
+/// <summary>
+/// This is the real meat for Plugin and WebService;
+/// ConsoleApp use fake in <seealso cref="Aggregator.Core.Script.ScriptLibrary"/>.
+/// </summary>
 namespace Aggregator.Core.Facade
 {
     public class ScriptLibrary : IScriptLibrary
