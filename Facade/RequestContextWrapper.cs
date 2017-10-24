@@ -29,6 +29,10 @@ using IVssRequestContext = Microsoft.TeamFoundation.Framework.Server.IVssRequest
 using IVssRequestContext = Microsoft.TeamFoundation.Framework.Server.TeamFoundationRequestContext;
 #endif
 
+#if TFS2017u2
+using Microsoft.TeamFoundation.Server.Types;
+#endif
+
 namespace Aggregator.Core.Facade
 {
     public class RequestContextWrapper : IRequestContext, IDisposable
@@ -77,8 +81,10 @@ namespace Aggregator.Core.Facade
             var ics = this.context.GetService<ICommonStructureService>();
 
 #if TFS2017u2
+
             var info = ics.GetProject(this.context, projectUri.ToString()).ToProjectInfo();
-            var projectProperties = info.Properties;
+            IProjectService projectService = this.context.GetService<IProjectService>();
+            var projectProperties = projectService.GetProjectProperties(this.context, info.Id, "*");
 #else
             string projectName;
             string projectState;
