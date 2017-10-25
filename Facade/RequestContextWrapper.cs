@@ -92,7 +92,7 @@ namespace Aggregator.Core.Facade
             CommonStructureProjectProperty[] projectProperties;
             ics.GetProjectProperties(this.context, projectUri.ToString(), out projectName, out projectState, out projectProperties);
 #endif
-            return projectProperties.Select(p => (IProjectProperty)new ProjectPropertyWrapper() { Name = p.Name, Value = p.Value }).ToArray();
+            return projectProperties.Select(p => (IProjectProperty)new ProjectPropertyWrapper() { Name = p.Name, Value = p.Value?.ToString() }).ToArray();
         }
 
         public IdentityDescriptor GetIdentityToImpersonate(Uri projectCollectionUrl)
