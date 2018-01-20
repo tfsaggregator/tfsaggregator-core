@@ -80,11 +80,9 @@ namespace Aggregator.Core.Facade
         {
             var ics = this.context.GetService<ICommonStructureService>();
 
-#if TFS2017u2
-
-            var info = ics.GetProject(this.context, projectUri.ToString()).ToProjectInfo();
+#if TFS2017u2 || TFS2018
             IProjectService projectService = this.context.GetService<IProjectService>();
-            var projectProperties = projectService.GetProjectProperties(this.context, info.Id, "*");
+            var projectProperties = projectService.GetProjectProperties(this.context, info.Id, “*”);
 #else
             string projectName;
             string projectState;
