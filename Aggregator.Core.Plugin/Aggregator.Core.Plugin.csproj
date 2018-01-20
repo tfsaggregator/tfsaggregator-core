@@ -57,7 +57,7 @@
     <CodeAnalysisRuleSet>..\TFS-Aggregator-2.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>TfsAggregator.ico</ApplicationIcon>
+    <ApplicationIcon>..\TfsAggregator.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug-2015.1|AnyCPU'">
     <TfsVersion>2015.1</TfsVersion>
