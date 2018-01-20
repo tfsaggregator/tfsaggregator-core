@@ -29,7 +29,7 @@ using IVssRequestContext = Microsoft.TeamFoundation.Framework.Server.IVssRequest
 using IVssRequestContext = Microsoft.TeamFoundation.Framework.Server.TeamFoundationRequestContext;
 #endif
 
-#if TFS2017u2
+#if TFS2017u2 || TFS2018
 using Microsoft.TeamFoundation.Server.Types;
 #endif
 
@@ -78,12 +78,12 @@ namespace Aggregator.Core.Facade
 
         public IProjectProperty[] GetProjectProperties(Uri projectUri)
         {
-            var ics = this.context.GetService<ICommonStructureService>();
-
 #if TFS2017u2 || TFS2018
             IProjectService projectService = this.context.GetService<IProjectService>();
-            var projectProperties = projectService.GetProjectProperties(this.context, info.Id, “*”);
+            var projectId = projectService.GetProjectId(this.context, this.GetProjectName(projectUri));
+            var projectProperties = projectService.GetProjectProperties(this.context, projectId, "*");
 #else
+            var ics = this.context.GetService<ICommonStructureService>();
             string projectName;
             string projectState;
 
