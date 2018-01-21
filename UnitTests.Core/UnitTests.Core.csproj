@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug-2018</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{D8C3CC34-8057-4FDA-AE91-07A5223A7B68}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -10,29 +10,8 @@
     <AssemblyName>UnitTests.Core</AssemblyName>
     <TargetFramework Condition="'$(TargetFramework)' == ''">net461</TargetFramework>
     <FileAlignment>512</FileAlignment>
-    <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <TestProjectType>UnitTest</TestProjectType>
     <Configurations>Debug-2013;Release-2013;Debug-2015;Release-2015;Debug-2015.1;Release-2015.1;Debug-2015.2;Release-2015.2;Debug-2017;Release-2017;Debug-2017.2;Release-2017.2;Debug-2018;Release-2018</Configurations>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug-2015|AnyCPU' ">
-    <TfsVersion>2015</TfsVersion>
-    <TargetFramework>net452</TargetFramework>
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug-2015</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <CodeAnalysisRuleSet>..\..\TFS-Aggregator-2.ruleset</CodeAnalysisRuleSet>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release-2015|AnyCPU' ">
-    <TfsVersion>2015</TfsVersion>
-    <TargetFramework>net452</TargetFramework>
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release-2015</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <CodeAnalysisRuleSet>..\..\TFS-Aggregator-2.ruleset</CodeAnalysisRuleSet>
@@ -43,132 +22,99 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug-2013</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <CodeAnalysisRuleSet>..\..\TFS-Aggregator-2.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release-2013|AnyCPU' ">
     <TfsVersion>2013</TfsVersion>
     <TargetFramework>net45</TargetFramework>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release-2013</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <CodeAnalysisRuleSet>..\..\TFS-Aggregator-2.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug-2015|AnyCPU' ">
+    <TfsVersion>2015</TfsVersion>
+    <TargetFramework>net452</TargetFramework>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release-2015|AnyCPU' ">
+    <TfsVersion>2015</TfsVersion>
+    <TargetFramework>net452</TargetFramework>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <DefineConstants>TRACE</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug-2015.1|AnyCPU'">
     <TfsVersion>2015.1</TfsVersion>
     <TargetFramework>net452</TargetFramework>
     <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\Debug-2015.1\</OutputPath>
     <DefineConstants>DEBUG;TRACE;</DefineConstants>
     <DebugType>full</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>..\..\TFS-Aggregator-2.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release-2015.1|AnyCPU'">
     <TfsVersion>2015.1</TfsVersion>
     <TargetFramework>net452</TargetFramework>
-    <OutputPath>bin\Release-2015.1\</OutputPath>
     <DefineConstants>TRACE;</DefineConstants>
     <Optimize>true</Optimize>
     <DebugType>pdbonly</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>..\..\TFS-Aggregator-2.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug-2015.2|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
     <TfsVersion>2015.2</TfsVersion>
     <TargetFramework>net452</TargetFramework>
-    <OutputPath>bin\Debug-2015.2\</OutputPath>
     <DefineConstants>DEBUG;TRACE;</DefineConstants>
     <DebugType>full</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>..\..\TFS-Aggregator-2.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release-2015.2|AnyCPU'">
     <TfsVersion>2015.2</TfsVersion>
     <TargetFramework>net452</TargetFramework>
-    <OutputPath>bin\Release-2015.2\</OutputPath>
     <DefineConstants>TRACE;</DefineConstants>
     <Optimize>true</Optimize>
     <DebugType>pdbonly</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>..\..\TFS-Aggregator-2.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug-2017|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
     <TfsVersion>2017</TfsVersion>
     <TargetFramework>net461</TargetFramework>
-    <OutputPath>bin\Debug-2017\</OutputPath>
     <DefineConstants>DEBUG;TRACE;</DefineConstants>
     <DebugType>full</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>..\..\TFS-Aggregator-2.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release-2017|AnyCPU'">
-    <OutputPath>bin\Release-2017\</OutputPath>
     <TfsVersion>2017</TfsVersion>
     <TargetFramework>net461</TargetFramework>
     <DefineConstants>TRACE;</DefineConstants>
     <Optimize>true</Optimize>
     <DebugType>pdbonly</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>..\..\TFS-Aggregator-2.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug-2017.2|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
     <TfsVersion>2017.2</TfsVersion>
     <TargetFramework>net461</TargetFramework>
-    <OutputPath>bin\Debug-2017.2\</OutputPath>
     <DefineConstants>DEBUG;TRACE;</DefineConstants>
     <DebugType>full</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>..\..\TFS-Aggregator-2.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release-2017.2|AnyCPU'">
-    <OutputPath>bin\Release-2017.2\</OutputPath>
     <TfsVersion>2017.2</TfsVersion>
     <TargetFramework>net461</TargetFramework>
     <DefineConstants>TRACE;</DefineConstants>
     <Optimize>true</Optimize>
     <DebugType>pdbonly</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>..\..\TFS-Aggregator-2.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug-2018|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
     <TfsVersion>2018</TfsVersion>
     <TargetFramework>net461</TargetFramework>
-    <OutputPath>bin\Debug-2018\</OutputPath>
     <DefineConstants>DEBUG;TRACE;</DefineConstants>
     <DebugType>full</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>..\..\TFS-Aggregator-2.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release-2018|AnyCPU'">
-    <OutputPath>bin\Release-2018\</OutputPath>
     <TfsVersion>2018</TfsVersion>
     <TargetFramework>net461</TargetFramework>
     <DefineConstants>TRACE;</DefineConstants>
     <Optimize>true</Optimize>
     <DebugType>pdbonly</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>..\..\TFS-Aggregator-2.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -179,11 +125,6 @@
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.XML" />
     <Reference Include="System.Xml.Linq" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="..\..\AssemblyVersion.cs">
-      <Link>AssemblyVersion.cs</Link>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Aggregator.Core.Plugin\Aggregator.Core.Plugin.csproj" />
