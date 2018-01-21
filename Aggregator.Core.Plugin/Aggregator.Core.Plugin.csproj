@@ -135,7 +135,6 @@
       <Link>Properties\TFS-Aggregator-2.ruleset</Link>
     </None>
     <None Include="app.config" />
-    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="..\TfsAggregator.ico" />
