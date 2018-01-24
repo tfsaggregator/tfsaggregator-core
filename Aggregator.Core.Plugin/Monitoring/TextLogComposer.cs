@@ -496,5 +496,10 @@ namespace Aggregator.Core.Monitoring
         {
             this.logger.Log(LogLevel.Information, $"Using fake ScriptLibrary implementation: mail will be sent to localhost.");
         }
+
+        public void WhatIfSave(IWorkItem workItem)
+        {
+            this.logger.Log(LogLevel.Information, $"WhatIf: work item #{workItem.Id} saved.");
+        }
     }
 }

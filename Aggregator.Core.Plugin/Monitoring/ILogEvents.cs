@@ -114,5 +114,7 @@ namespace Aggregator.Core.Monitoring
         void UsingFakeGetEmailAddress(string userName, string defaultValue);
 
         void UsingFakeSendMail();
+
+        void WhatIfSave(IWorkItem workItem);
     }
 }
