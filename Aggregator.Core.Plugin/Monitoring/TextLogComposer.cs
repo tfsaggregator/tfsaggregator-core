@@ -262,7 +262,7 @@ namespace Aggregator.Core.Monitoring
         public void RunningRule(string name, IWorkItem workItem)
         {
             this.logger.Log(
-                LogLevel.Verbose,
+                LogLevel.Information,
                 "Applying Rule '{0}' on #{1}",
                 name,
                 workItem.Id);
@@ -497,9 +497,14 @@ namespace Aggregator.Core.Monitoring
             this.logger.Log(LogLevel.Information, $"Using fake ScriptLibrary implementation: mail will be sent to localhost.");
         }
 
+        public void WhatIfEnabled()
+        {
+            this.logger.Log(LogLevel.Warning, $"WhatIf flag: no change will be saved.");
+        }
+
         public void WhatIfSave(IWorkItem workItem)
         {
-            this.logger.Log(LogLevel.Information, $"WhatIf: work item #{workItem.Id} saved.");
+            this.logger.Log(LogLevel.Verbose, $"WhatIf: work item #{workItem.Id} saved.");
         }
     }
 }
