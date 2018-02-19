@@ -7,5 +7,7 @@
         int TargetId { get; }
 
         IWorkItem Target { get; }
+
+        bool IsNew { get; }
     }
 }

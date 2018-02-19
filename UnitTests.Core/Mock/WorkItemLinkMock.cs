@@ -31,6 +31,11 @@ namespace UnitTests.Core.Mock
             get { return this.store.GetWorkItem(this.id); }
         }
 
+        public bool IsNew
+        {
+            get { return false; }
+        }
+
         public override bool Equals(object obj)
         {
             if (ReferenceEquals(null, obj))

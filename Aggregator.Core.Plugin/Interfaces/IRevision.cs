@@ -7,5 +7,7 @@
         IFieldCollection Fields { get; }
 
         int Index { get; }
+
+        IWorkItemLinkExposedCollection WorkItemLinks { get; }
     }
 }

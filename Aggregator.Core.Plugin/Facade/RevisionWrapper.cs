@@ -1,5 +1,7 @@
 ﻿using System;
-
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using Aggregator.Core.Context;
 using Aggregator.Core.Interfaces;
 
@@ -40,6 +42,14 @@ namespace Aggregator.Core.Facade
             get
             {
                 return this.revision.Index;
+            }
+        }
+
+        public IWorkItemLinkExposedCollection WorkItemLinks
+        {
+            get
+            {
+                return new WorkItemLinkExposedCollectionWrapper(this.revision.Links, this.context);
             }
         }
     }

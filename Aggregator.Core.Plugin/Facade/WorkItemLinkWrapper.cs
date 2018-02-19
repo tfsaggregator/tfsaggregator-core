@@ -33,6 +33,14 @@ namespace Aggregator.Core.Facade
             }
         }
 
+        public bool IsNew
+        {
+            get
+            {
+                return this.link.IsNew;
+            }
+        }
+
         public IWorkItem Target
         {
             get
