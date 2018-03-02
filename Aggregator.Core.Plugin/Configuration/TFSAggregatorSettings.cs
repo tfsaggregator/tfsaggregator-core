@@ -75,5 +75,7 @@ namespace Aggregator.Core.Configuration
         public bool Debug { get; set; }
 
         public RateLimit RateLimit { get; set; }
+
+        public bool WhatIf { get; set; }
     }
 }

@@ -118,6 +118,11 @@ namespace Aggregator.Core.Facade
             this.workItem.Save();
         }
 
+        public void RevertChanges()
+        {
+            this.workItem.Reset();
+        }
+
         public void TryOpen()
         {
             try

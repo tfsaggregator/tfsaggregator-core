@@ -19,12 +19,23 @@ namespace Aggregator.Core.Facade
 
         private readonly IRuntimeContext context;
 
-        private readonly WorkItemLinkCollection workItemLinkCollection;
+        private readonly IEnumerable<WorkItemLink> workItemLinkCollection;
 
-        public WorkItemLinkCollectionWrapper(WorkItemLinkCollection workItemLinkCollection, IRuntimeContext context)
+        public WorkItemLinkCollectionWrapper(WorkItemLinkCollection workItemLinkCollection, IRuntimeContext context) 
+            : this(context)
+        {
+            this.workItemLinkCollection = workItemLinkCollection.Cast<WorkItemLink>();
+        }
+
+        public WorkItemLinkCollectionWrapper(LinkCollection linkCollection, IRuntimeContext context)
+            : this(context)
+        {
+            this.workItemLinkCollection = linkCollection.OfType<WorkItemLink>();
+        }
+
+        private WorkItemLinkCollectionWrapper(IRuntimeContext context)
         {
             this.logger = context.Logger;
-            this.workItemLinkCollection = workItemLinkCollection;
             this.store = context.WorkItemRepository;
             this.context = context;
         }

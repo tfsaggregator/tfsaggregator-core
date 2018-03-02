@@ -156,6 +156,8 @@ namespace Aggregator.Core.Configuration
                 var runtimeNode = doc.Root.Element("runtime") ?? null;
                 var debugvalue = runtimeNode?.Attribute("debug")?.Value;
                 this.instance.Debug = debugvalue != null && bool.Parse(debugvalue);
+                var whatifvalue = runtimeNode?.Attribute("whatIf")?.Value;
+                this.instance.WhatIf = whatifvalue != null && bool.Parse(whatifvalue);
 
                 var authenticationNode = doc.Root.Element("runtime") != null ?
                     doc.Root.Element("runtime")?.Element("authentication") : null;

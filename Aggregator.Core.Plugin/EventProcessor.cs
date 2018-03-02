@@ -148,8 +148,18 @@ namespace Aggregator.Core
 
                 if (isValid && !shouldLimit)
                 {
-                    workItem.PartialOpen();
-                    workItem.Save();
+                    if (this.settings.WhatIf)
+                    {
+                        this.logger.WhatIfSave(workItem);
+                        // HACK
+                        var wrapper = (WorkItemWrapper)workItem;
+                        wrapper.RevertChanges();
+                    }
+                    else
+                    {
+                        workItem.PartialOpen();
+                        workItem.Save();
+                    }
 
                     // track
                     this.savedWorkItemIds.Add(workItem.Id);
