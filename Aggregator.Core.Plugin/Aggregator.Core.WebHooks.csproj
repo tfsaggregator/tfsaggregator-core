@@ -5,7 +5,6 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{FEA76835-61B3-4FC7-9D6F-50D39A7A8258}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Aggregator.Core</RootNamespace>
     <AssemblyName>TFSAggregator2.Core</AssemblyName>
@@ -40,11 +39,7 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Xml" />
   </ItemGroup>
-  <ItemGroup>
-    <Compile Include="..\..\AssemblyVersion.cs">
-      <Link>AssemblyVersion.cs</Link>
-    </Compile>
-  </ItemGroup>
+
   <ItemGroup>
     <EmbeddedResource Include="Configuration\AggregatorConfiguration.xsd">
       <SubType>Designer</SubType>
