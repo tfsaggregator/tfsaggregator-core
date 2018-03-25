@@ -144,8 +144,7 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Aggregator.Core.Plugin\Aggregator.Core.Plugin.csproj" Condition=" '$(IsWebHooks)' != 'true' " />
-    <ProjectReference Include="..\Aggregator.Core.Plugin\Aggregator.Core.WebHooks.csproj" Condition=" '$(IsWebHooks)' == 'true' " />
+    <ProjectReference Include="..\Aggregator.Core\Aggregator.Core.csproj" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="ConfigurationsForTests\NoOp.policies">

@@ -1,7 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug-2018</Configuration>
+    <Configuration Condition=" '$(Configuration)' == '' and '$(IsWebHooks)' == 'true' ">Debug</Configuration>
+    <Configuration Condition=" '$(Configuration)' == '' and '$(IsWebHooks)' != 'true' ">Debug-2018</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{FEA76835-61B3-4FC7-9D6F-50D39A7A8258}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -10,12 +11,28 @@
     <AssemblyName>TFSAggregator2.Core</AssemblyName>
     <TargetFramework Condition="'$(TargetFramework)' == ''">net461</TargetFramework>
     <FileAlignment>512</FileAlignment>
-    <Configurations>Debug-2013;Release-2013;Debug-2015;Release-2015;Debug-2015.1;Release-2015.1;Debug-2015.2;Release-2015.2;Debug-2017;Release-2017;Debug-2017.2;Release-2017.2;Debug-2018;Release-2018</Configurations>
+    <Configurations>Debug;Release;Debug-2013;Release-2013;Debug-2015;Release-2015;Debug-2015.1;Release-2015.1;Debug-2015.2;Release-2015.2;Debug-2017;Release-2017;Debug-2017.2;Release-2017.2;Debug-2018;Release-2018</Configurations>
     <CodeAnalysisRuleSet>..\TFS-Aggregator-2.ruleset</CodeAnalysisRuleSet>
     <WarningLevel>4</WarningLevel>
     <ErrorReport>prompt</ErrorReport>
     <ApplicationIcon>..\TfsAggregator.ico</ApplicationIcon>
   </PropertyGroup>
+  <!-- WebHooks -->
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <TfsVersion>2018</TfsVersion>
+    <TargetFramework>net461</TargetFramework>
+    <DefineConstants>DEBUG;TRACE;</DefineConstants>
+    <DebugType>full</DebugType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
+    <TfsVersion>2018</TfsVersion>
+    <TargetFramework>net461</TargetFramework>
+    <DefineConstants>TRACE;</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+  </PropertyGroup>
+  <!-- Server Plugin -->
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug-2013|AnyCPU' ">
     <TfsVersion>2013</TfsVersion>
     <TargetFramework>net45</TargetFramework>
