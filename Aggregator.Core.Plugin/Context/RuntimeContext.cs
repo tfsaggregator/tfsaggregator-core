@@ -233,6 +233,7 @@ namespace Aggregator.Core.Context
             var requestUri = this.RequestContext.GetProjectCollectionUri();
             var uri = requestUri.ApplyServerSetting(this);
 
+            // before trying to connect to the TFS/VSTS specified by the URI prepare the environment
             if (this.Settings.IgnoreSslErrors)
             {
                 // HACK this applies to other policies

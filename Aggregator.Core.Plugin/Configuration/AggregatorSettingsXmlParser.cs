@@ -175,12 +175,12 @@ namespace Aggregator.Core.Configuration
 
                 var serverNode = doc.Root.Element("runtime") != null ?
                     doc.Root.Element("runtime")?.Element("server") : null;
-                string baseUrl = serverNode?.Attribute("baseUrl").Value;
+                string baseUrl = serverNode?.Attribute("baseUrl")?.Value;
                 this.instance.ServerBaseUrl = string.IsNullOrWhiteSpace(baseUrl)
                     ? null
                     : new Uri(new Uri(baseUrl).GetLeftPart(UriPartial.Authority));
                 this.instance.IgnoreSslErrors = serverNode != null
-                    && bool.Parse(serverNode.Attribute("ignoreSslErrors").Value);
+                    && bool.Parse(serverNode.Attribute("ignoreSslErrors")?.Value);
             }
 
             private List<Policy> ParsePoliciesSection(XDocument doc, Dictionary<string, Rule> rules)
