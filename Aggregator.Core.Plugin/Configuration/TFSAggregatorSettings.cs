@@ -77,5 +77,7 @@ namespace Aggregator.Core.Configuration
         public RateLimit RateLimit { get; set; }
 
         public bool WhatIf { get; set; }
+
+        public bool IgnoreSslErrors { get; set; }
     }
 }

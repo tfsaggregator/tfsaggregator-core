@@ -233,6 +233,13 @@ namespace Aggregator.Core.Context
             var requestUri = this.RequestContext.GetProjectCollectionUri();
             var uri = requestUri.ApplyServerSetting(this);
 
+            if (this.Settings.IgnoreSslErrors)
+            {
+                // HACK this applies to other policies
+                System.Net.ServicePointManager.ServerCertificateValidationCallback +=
+                    (sender, cert, chain, sslPolicyErrors) => true;
+            }
+
             var newRepo = this.repoBuilder(this);
             var ci = this.GetConnectionInfo();
             this.Logger.WorkItemRepositoryBuilt(uri, ci.Token);

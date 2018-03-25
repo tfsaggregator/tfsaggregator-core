@@ -179,6 +179,8 @@ namespace Aggregator.Core.Configuration
                 this.instance.ServerBaseUrl = string.IsNullOrWhiteSpace(baseUrl)
                     ? null
                     : new Uri(new Uri(baseUrl).GetLeftPart(UriPartial.Authority));
+                this.instance.IgnoreSslErrors = serverNode != null
+                    && bool.Parse(serverNode.Attribute("ignoreSslErrors").Value);
             }
 
             private List<Policy> ParsePoliciesSection(XDocument doc, Dictionary<string, Rule> rules)
