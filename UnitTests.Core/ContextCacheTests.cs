@@ -21,7 +21,7 @@ namespace UnitTests.Core
 
         private string SetupSettingsFile(string sourceName)
         {
-            string sourcePath = Path.Combine(@"..\..\ConfigurationsForTests", sourceName);
+            string sourcePath = Path.Combine(@"ConfigurationsForTests", sourceName);
             string destPath = Path.GetTempFileName();
             File.Copy(sourcePath, destPath, true);
             File.SetLastWriteTimeUtc(destPath, this.referenceDate);
@@ -29,6 +29,7 @@ namespace UnitTests.Core
         }
 
         [TestMethod]
+        [DeploymentItem("ConfigurationsForTests\\NoOp.policies", "ConfigurationsForTests")]
         public void ContextCache_cold_succeeds()
         {
             string path = this.SetupSettingsFile("NoOp.policies");
@@ -43,6 +44,7 @@ namespace UnitTests.Core
         }
 
         [TestMethod]
+        [DeploymentItem("ConfigurationsForTests\\NoOp.policies", "ConfigurationsForTests")]
         public void ContextCache_warm_succeeds()
         {
             string path = this.SetupSettingsFile("NoOp.policies");
@@ -56,9 +58,10 @@ namespace UnitTests.Core
         }
 
         [TestMethod]
+        [DeploymentItem("ConfigurationsForTests\\NoOp.policies", "ConfigurationsForTests")]
         public void ContextCache_file_changed_succeeds()
         {
-            string sourcePath = @"..\..\ConfigurationsForTests\NoOp.policies";
+            string sourcePath = @"ConfigurationsForTests\NoOp.policies";
             string destPath = Path.GetTempFileName();
             File.Copy(sourcePath, destPath, true);
             File.SetLastWriteTimeUtc(destPath, this.referenceDate);

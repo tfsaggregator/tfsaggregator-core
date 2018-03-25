@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug-2018</Configuration>
+    <Configuration Condition=" '$(Configuration)' == '' and '$(IsWebHooks)' == 'true' ">Debug</Configuration>
+    <Configuration Condition=" '$(Configuration)' == '' and '$(IsWebHooks)' != 'true' ">Debug-2018</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{D8C3CC34-8057-4FDA-AE91-07A5223A7B68}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -11,11 +12,27 @@
     <TargetFramework Condition="'$(TargetFramework)' == ''">net461</TargetFramework>
     <FileAlignment>512</FileAlignment>
     <TestProjectType>UnitTest</TestProjectType>
-    <Configurations>Debug-2013;Release-2013;Debug-2015;Release-2015;Debug-2015.1;Release-2015.1;Debug-2015.2;Release-2015.2;Debug-2017;Release-2017;Debug-2017.2;Release-2017.2;Debug-2018;Release-2018</Configurations>
+    <Configurations>Debug;Release;Debug-2013;Release-2013;Debug-2015;Release-2015;Debug-2015.1;Release-2015.1;Debug-2015.2;Release-2015.2;Debug-2017;Release-2017;Debug-2017.2;Release-2017.2;Debug-2018;Release-2018</Configurations>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <CodeAnalysisRuleSet>..\..\TFS-Aggregator-2.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
+  <!-- WebHooks -->
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <TfsVersion>2018</TfsVersion>
+    <TargetFramework>net461</TargetFramework>
+    <DefineConstants>DEBUG;TRACE;</DefineConstants>
+    <DebugType>full</DebugType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
+    <TfsVersion>2018</TfsVersion>
+    <TargetFramework>net461</TargetFramework>
+    <DefineConstants>TRACE;</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+  </PropertyGroup>
+  <!-- Server Plugin -->
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug-2013|AnyCPU' ">
     <TfsVersion>2013</TfsVersion>
     <TargetFramework>net45</TargetFramework>
@@ -127,10 +144,13 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Aggregator.Core.Plugin\Aggregator.Core.Plugin.csproj" />
+    <ProjectReference Include="..\Aggregator.Core.Plugin\Aggregator.Core.Plugin.csproj" Condition=" '$(IsWebHooks)' != 'true' " />
+    <ProjectReference Include="..\Aggregator.Core.Plugin\Aggregator.Core.WebHooks.csproj" Condition=" '$(IsWebHooks)' == 'true' " />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="ConfigurationsForTests\NoOp.policies" />
+    <EmbeddedResource Include="ConfigurationsForTests\NoOp.policies">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
     <EmbeddedResource Include="ConfigurationsForTests\SumFieldsOnSingleWorkItem.policies">
       <SubType>Designer</SubType>
     </EmbeddedResource>
@@ -139,6 +159,7 @@
     <EmbeddedResource Include="ConfigurationsForTests\SumFieldsOnSingleWorkItemVB.policies" />
     <EmbeddedResource Include="ConfigurationsForTests\NewObjects.policies">
       <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="ConfigurationsForTests\RulesAndPolicy.policies">
       <SubType>Designer</SubType>
