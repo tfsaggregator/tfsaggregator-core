@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Net.Mail;
 using Aggregator.Core.Configuration;
 using Aggregator.Core.Context;
@@ -8,7 +8,7 @@ using Microsoft.TeamFoundation.Client;
 using Microsoft.TeamFoundation.Framework.Client;
 using Microsoft.TeamFoundation.Framework.Common;
 using Microsoft.TeamFoundation.Framework.Server;
-
+using Microsoft.TeamFoundation.WorkItemTracking.Client;
 #if TFS2015u1
 using IVssRequestContext = Microsoft.TeamFoundation.Framework.Server.IVssRequestContext;
 #else
@@ -91,13 +91,15 @@ namespace Aggregator.Core.Facade
                         client.Port = this.SmtpPort;
                         client.EnableSsl = this.EnableSsl;
 
-                        MailMessage message = new MailMessage();
-                        message.From = this.FromAddress;
-                        message.To.Add(to);
-                        message.Subject = subject;
-                        message.Body = body;
+                        using (MailMessage message = new MailMessage())
+                        {
+                            message.From = this.FromAddress;
+                            message.To.Add(to);
+                            message.Subject = subject;
+                            message.Body = body;
 
-                        client.Send(message);
+                            client.Send(message);
+                        }
                     }
                 }
             }
@@ -119,35 +121,84 @@ namespace Aggregator.Core.Facade
         // source: https://paulselles.wordpress.com/2014/03/24/tfs-api-tfs-user-email-address-lookup-and-reverse-lookup/
         public string GetEmailAddress(string userName, string defaultValue)
         {
-            using (var teamProjectCollection = this.connectionInfo.Token.GetCollection(this.connectionInfo.ProjectCollectionUri))
+            using (var teamProjectCollection =
+                this.connectionInfo.Token.GetCollection(this.connectionInfo.ProjectCollectionUri))
             {
-                var identityManagementService = teamProjectCollection.GetService<IIdentityManagementService>();
-
-                TeamFoundationIdentity identity = identityManagementService.ReadIdentity(
-                    IdentitySearchFactor.AccountName,
-                    userName,
-                    MembershipQuery.None,
-                    ReadIdentityOptions.ExtendedProperties);
-
-                // if not found try again using DisplayName
-                identity = identity ?? identityManagementService.ReadIdentity(
-                    IdentitySearchFactor.DisplayName,
-                    userName,
-                    MembershipQuery.None,
-                    ReadIdentityOptions.ExtendedProperties);
-
-                if (identity == null)
+                Func<string, string>[] helpers = 
                 {
-                    return defaultValue;
+                    (lookup) =>
+                    {
+                        string email = null;
+                        var workItemStore = teamProjectCollection.GetService<WorkItemStore>();
+                        if (workItemStore.TryFindIdentity(lookup, out var identity))
+                        {
+                            email = identity?.Email ?? string.Empty;
+                        }
+
+                        return email;
+                    },
+                    (lookup) =>
+                    {
+                        var identityManagementService = teamProjectCollection.GetService<IIdentityManagementService>();
+
+                        TeamFoundationIdentity identity = identityManagementService.ReadIdentity(
+                            IdentitySearchFactor.AccountName,
+                            lookup,
+                            MembershipQuery.None,
+                            ReadIdentityOptions.ExtendedProperties);
+
+                        if (identity == null)
+                        {
+                            return string.Empty;
+                        }
+                        else
+                        {
+                            string mailAddress = identity.GetAttribute("Mail", null);
+                            mailAddress = string.IsNullOrWhiteSpace(mailAddress)
+                                ? identity.GetAttribute("ConfirmedNotificationAddress", null)
+                                : mailAddress;
+                            return mailAddress;
+                        }
+                    },
+                    (lookup) =>
+                    {
+                        var identityManagementService = teamProjectCollection.GetService<IIdentityManagementService>();
+
+                        TeamFoundationIdentity identity = identityManagementService.ReadIdentity(
+                            IdentitySearchFactor.DisplayName,
+                            lookup,
+                            MembershipQuery.None,
+                            ReadIdentityOptions.ExtendedProperties);
+
+                        if (identity == null)
+                        {
+                            return string.Empty;
+                        }
+                        else
+                        {
+                            string mailAddress = identity.GetAttribute("Mail", null);
+                            mailAddress = string.IsNullOrWhiteSpace(mailAddress)
+                                ? identity.GetAttribute("ConfirmedNotificationAddress", null)
+                                : mailAddress;
+                            return mailAddress;
+                        }
+                    }
+                };
+
+                foreach (var helper in helpers)
+                {
+                    try
+                    {
+                        var result = helper(userName);
+                        if (!string.IsNullOrWhiteSpace(result))
+                        {
+                            return result;
+                        }
+                    }
+                    catch {}
                 }
 
-                // pick first non-null value
-                string mailAddress = identity.GetAttribute("Mail", null);
-                mailAddress = string.IsNullOrWhiteSpace(mailAddress) ?
-                    identity.GetAttribute("ConfirmedNotificationAddress", defaultValue)
-                    : mailAddress;
-
-                return mailAddress;
+                return defaultValue;
             }
         }
     }
