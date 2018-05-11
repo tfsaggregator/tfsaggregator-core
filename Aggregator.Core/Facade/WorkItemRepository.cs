@@ -100,7 +100,12 @@ namespace Aggregator.Core.Facade
                 throw new ArgumentNullException(nameof(inSameProjectAs));
             }
 
-            return this.MakeNewWorkItem(workItemTypeName, inSameProjectAs[CoreFieldReferenceNames.TeamProject] as string);
+            return this.MakeNewWorkItem((string)inSameProjectAs[CoreFieldReferenceNames.TeamProject], workItemTypeName);
+        }
+
+        public IWorkItem MakeNewWorkItem(IWorkItemExposed inSameProjectAs, string workItemTypeName)
+        {
+            return this.MakeNewWorkItem((IWorkItem)inSameProjectAs, workItemTypeName);
         }
 
         public IEnumerable<string> GetGlobalList(string globalListName)

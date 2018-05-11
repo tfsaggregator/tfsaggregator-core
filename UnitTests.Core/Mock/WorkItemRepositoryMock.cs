@@ -55,7 +55,12 @@ namespace UnitTests.Core.Mock
                 throw new ArgumentNullException(nameof(inSameProjectAs));
             }
 
-            return this.MakeNewWorkItem(workItemTypeName, inSameProjectAs[CoreFieldReferenceNames.TeamProject] as string);
+            return this.MakeNewWorkItem(inSameProjectAs[CoreFieldReferenceNames.TeamProject] as string, workItemTypeName);
+        }
+
+        public IWorkItem MakeNewWorkItem(IWorkItemExposed inSameProjectAs, string workItemTypeName)
+        {
+            return this.MakeNewWorkItem((IWorkItem)inSameProjectAs, workItemTypeName);
         }
 
         XmlDocument globalListsDoc = null;
