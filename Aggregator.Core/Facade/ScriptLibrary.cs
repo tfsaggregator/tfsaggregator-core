@@ -124,8 +124,9 @@ namespace Aggregator.Core.Facade
             using (var teamProjectCollection =
                 this.connectionInfo.Token.GetCollection(this.connectionInfo.ProjectCollectionUri))
             {
-                Func<string, string>[] helpers = 
+                Func<string, string>[] helpers =
                 {
+#if !TFS2013
                     (lookup) =>
                     {
                         string email = null;
@@ -137,6 +138,7 @@ namespace Aggregator.Core.Facade
 
                         return email;
                     },
+#endif
                     (lookup) =>
                     {
                         var identityManagementService = teamProjectCollection.GetService<IIdentityManagementService>();
